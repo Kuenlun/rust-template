@@ -1,0 +1,52 @@
+[package]
+name = "rust-template"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+authors = ["Juan Luis Leal Contreras <kuenlunleal@gmail.com>"]
+
+# Prevents accidental publication. Delete this line (and fill the metadata
+# block below) to enable publishing to crates.io.
+publish = false
+
+# Required / recommended for crates.io publication.
+# description = "TODO: one-line crate description"
+# repository = "https://github.com/Kuenlun/rust-template"
+# keywords = []
+# categories = []
+
+# Lockpick policy: 100% coverage across the board (functions, lines,
+# regions, branches) and byte-equality license header on every source
+# file. Matches the default profile shipped to consumer projects.
+[package.metadata.lockpick]
+license-header = ".github/license_header.rs"
+
+[package.metadata.lockpick.coverage]
+functions = 100
+lines = 100
+regions = 100
+branches = 100
+
+[dependencies]
+
+[dev-dependencies]
+assert_cmd = "2.2.2"
+
+[lints.rust]
+unsafe_code = "forbid"
+warnings = "deny"
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(coverage_nightly)'] }
+
+[lints.clippy]
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+unwrap_used = "deny"
+expect_used = "deny"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "debuginfo"
+debug = false
